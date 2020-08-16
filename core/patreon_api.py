@@ -38,7 +38,7 @@ def get_patreons(list_of_user_names=None):
         mail = pledge.relationship('patron').attribute('email')
         username = mail.split('@')[0]
 
-        if username in list_of_user_names or list_of_user_names is None:
+        if list_of_user_names is None or username in list_of_user_names:
             if not declined and reward_tier >= 300:
                 patreon_list.append(PatreonResponse(
                     username=username,
