@@ -16,7 +16,8 @@ class Status(str, Enum):
 
 class PatreonResponse:
 
-    def __init__(self, username, status, mail, tier=None):
+    def __init__(self, patron_id, username, status, mail, tier=None):
+        self.id = patron_id
         self.username = username
         self.mail = mail
         self.status = status
@@ -24,6 +25,7 @@ class PatreonResponse:
 
 
 class PatreonModel(BaseModel):
+    id: str
     user_name: str
     mail: str
     status: Status

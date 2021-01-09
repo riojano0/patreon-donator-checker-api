@@ -62,6 +62,7 @@ class PatreonApi:
                     # TIER 1 is consider inactive
                     if reward_tier == 100:
                         patreon_list.append(PatreonResponse(
+                            patron_id=relationship_patron.id(),
                             username=username,
                             mail=mail,
                             status=Status.INACTIVE,
@@ -69,6 +70,7 @@ class PatreonApi:
                         ))
                     if reward_tier == 300:
                         patreon_list.append(PatreonResponse(
+                            patron_id=relationship_patron.id(),
                             username=username,
                             mail=mail,
                             status=Status.ACTIVE,
@@ -76,6 +78,7 @@ class PatreonApi:
                         ))
                     if reward_tier == 500:
                         patreon_list.append(PatreonResponse(
+                            patron_id=relationship_patron.id(),
                             username=username,
                             mail=mail,
                             status=Status.ACTIVE,
@@ -84,12 +87,14 @@ class PatreonApi:
 
                 elif is_declined_or_paused and reward_tier >= 300:
                     patreon_list.append(PatreonResponse(
+                        patron_id=relationship_patron.id(),
                         username=username,
                         mail=mail,
                         status=Status.INACTIVE,
                     ))
                 else:
                     patreon_list.append(PatreonResponse(
+                        patron_id=relationship_patron.id(),
                         username=username,
                         mail=mail,
                         status=Status.INACTIVE,
