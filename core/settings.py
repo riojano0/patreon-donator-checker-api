@@ -4,4 +4,5 @@ from pathlib import Path
 
 def environment_config():
     env_path = Path('.') / ".env"
-    load_dotenv(dotenv_path=env_path)
+    if env_path.exists():
+        load_dotenv(dotenv_path=env_path)
