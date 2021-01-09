@@ -5,16 +5,17 @@ from typing import List
 from fastapi import FastAPI, Response, Query, Security, Depends, HTTPException
 from fastapi.openapi.models import APIKey
 from fastapi.security import APIKeyHeader, APIKeyQuery
-import core.patreon_api as PatreonApi
-
+from core.patreon_api import PatreonApi
 from core.patreon_response import PatreonModel
+from core.settings import environment_config
 
 patreon_pledge_checker = FastAPI()
 
+environment_config()
 x_api_key_valid = os.environ.get('X-API-Key-Valid', None)
 X_API_KEY_QUERY = APIKeyQuery(name="X-API-Key")
 X_API_KEY_HEADER = APIKeyHeader(name="X-API-Key")
-
+patreonApi = PatreonApi()
 
 def check_api_key(
         api_key_query: str = Security(X_API_KEY_QUERY),
@@ -34,6 +35,6 @@ def check_api_key(
 @patreon_pledge_checker.get("/patreons", response_model=List[PatreonModel])
 def get_patreons(username_list: str = Query(None), api_key: APIKey = Depends(check_api_key)):
     username_list = username_list.split(',') if username_list else None
-    all_patreons = PatreonApi.get_patreons(list_of_user_names=username_list)
+    all_patreons = patreonApi.get_patreons(list_of_user_names=username_list)
     dumps = json.dumps(all_patreons, default=lambda o: o.__dict__, indent=4, ensure_ascii=False)
     return Response(dumps, media_type="application/json")

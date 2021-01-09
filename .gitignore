@@ -101,3 +101,4 @@ debug.log
 !*/image/.keep
 !*/clean/.keep
 !*/last_data/.keep
+*.env
