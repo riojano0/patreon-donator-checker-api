@@ -12,6 +12,11 @@ Currently have a configuration that show in the response the following cases
 - User Inactive -> Less than 300cents and not decline and not pause
 - User Inactive -> Decline or pause
 
+# What environment variables I need?
+
+- ACCESS_TOKEN: Access token provide by Patreon
+- X-API-Key-Valid: Internal key use to validate request from know resources
+
 ### Pending
 - Fetch specific users
 - Create cache/database to fetch on the same 5 minutes
