@@ -48,9 +48,11 @@ class PatreonApi:
                                     or (pledge.attribute('is_paused') or pledge.attribute('is_paused') == 'true')
             reward_tier = 0
 
-            relationship_reward = pledge.relationship('reward')
-            if relationship_reward:
-                reward_tier = relationship_reward.attribute('amount_cents')
+            relationship_reward_info = pledge.relationship_info('reward')
+            if relationship_reward_info.json_data and relationship_reward_info.json_data['data']:
+                relationship_reward = pledge.relationship('reward')
+                if relationship_reward:
+                    reward_tier = relationship_reward.attribute('amount_cents')
 
             relationship_patron = pledge.relationship('patron')
             mail = relationship_patron.attribute('email')
