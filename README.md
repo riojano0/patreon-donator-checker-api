@@ -19,5 +19,5 @@ Currently have a configuration that show in the response the following cases
 
 ### Pending
 - Fetch specific users
-- Create cache/database to fetch on the same 5 minutes
+- ~~Create cache/database to fetch on the same 1 minutes~~
   
