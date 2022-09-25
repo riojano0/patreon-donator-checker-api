@@ -37,7 +37,11 @@ class PatreonApi:
         return patreon_list_sorted
 
     @staticmethod
-    def create_patreon_list(all_pledges, list_of_user_names):
+    def get_patreon_list(all_pledges, list_of_user_names):
+        raise NotImplementedError
+
+    @staticmethod
+    def get_default_patreon_list(all_pledges, list_of_user_names):
         patreon_list = []
         for pledge in all_pledges:
             # declined_since indicates the date of the most recent payment if it failed,
@@ -69,15 +73,15 @@ class PatreonApi:
                 if not is_declined_or_paused:
                     # TIER 1 is consider inactive
                     if reward_tier == 100:
-                        patreon_response.status = Status.INACTIVE,
+                        patreon_response.status = Status.INACTIVE.value
                         patreon_response.tier = Tier.TIER_1
                         patreon_list.append(patreon_response)
                     if reward_tier == 300:
-                        patreon_response.status = Status.ACTIVE,
+                        patreon_response.status = Status.ACTIVE.value
                         patreon_response.tier = Tier.TIER_2
                         patreon_list.append(patreon_response)
                     if reward_tier == 500:
-                        patreon_response.status = Status.ACTIVE,
+                        patreon_response.status = Status.ACTIVE.value
                         patreon_response.tier = Tier.TIER_3
                         patreon_list.append(patreon_response)
 
@@ -87,3 +91,10 @@ class PatreonApi:
                     patreon_list.append(patreon_response)
 
         return patreon_list
+
+    @staticmethod
+    def create_patreon_list(all_pledges, list_of_user_names):
+        try:
+            PatreonApi.get_patreon_list(all_pledges, list_of_user_names)
+        except NotImplementedError:
+            return PatreonApi.get_default_patreon_list(all_pledges, list_of_user_names)
